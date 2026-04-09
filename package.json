@@ -1,5 +1,5 @@
 {
-  "name": "@kuriyota/locale-matcher",
+  "name": "@kuriyona/locale-matcher",
   "version": "0.2.0",
   "type": "module",
   "main": "dist/index.mjs",

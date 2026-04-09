@@ -1,59 +1,51 @@
 # Locale Matcher
 
-`@kuriyota/locale-matcher`
+`@kuriyona/locale-matcher`
 
-[![npm](https://img.shields.io/npm/v/@kuriyota/locale-matcher)](https://www.npmjs.com/package/@kuriyota/locale-matcher)
+[![npm](https://img.shields.io/npm/v/@kuriyona/locale-matcher)](https://www.npmjs.com/package/@kuriyona/locale-matcher)
 
-[GitHub](https://github.com/kuriyota/locale-matcher)
-
-智能语言标签匹配库，用于匹配和排序最符合用户偏好的语言标签。
+[GitHub](https://github.com/kuriyona/locale-matcher)
 
 A smart language tag matcher library for matching and sorting the most suitable language tags for users.
 
-## 功能特性 Features
+## Features
 
-- 支持语言-脚本-地区三级匹配（如 `zh-Hans-CN`）
-- 基于优先级的智能排序
-- 内置常见语言变体规则（中文繁简、西里尔/拉丁字母等）
-- 100% 测试覆盖率
 - Supports language-script-region matching (e.g. `zh-Hans-CN`)
-- Smart sorting
+- Priority-based intelligent sorting
 - Built-in rules for common language variants (e.g. Chinese simplified/traditional, Cyrillic/Latin letters, etc.)
 - 100% test coverage
 
 ## \<script\> + CDN
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@kuriyota/locale-matcher/dist/index.iife.js"></script>
-<script src="https://unpkg.com/@kuriyota/locale-matcher/dist/index.iife.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@kuriyona/locale-matcher/dist/index.iife.js"></script>
+<script src="https://unpkg.com/@kuriyona/locale-matcher/dist/index.iife.js"></script>
 <script>
-  const { matchLanguages } = window.LocaleMatcher;
-  console.log(matchLanguages('zh-CN', ['zh-Hans', 'zh-Hant', 'en']));
+  const { match } = window.LocaleMatcher;
+  console.log(match('zh-CN', ['zh-Hans', 'zh-Hant', 'en']));
 </script>
 ```
 
-## 安装 Install
+## Install
 
 ```bash
-npm install @kuriyota/locale-matcher
-# 或
-pnpm add @kuriyota/locale-matcher
+npm install @kuriyona/locale-matcher
 ```
 
-## 使用示例 Usage
+## Usage
 
 ```typescript
-import { rank, match } from '@kuriyota/locale-matcher';
+import { rank, match } from '@kuriyona/locale-matcher';
 
-// 基本匹配 Basic Match
+// Basic Match
 match('zh-CN', ['zh-Hans', 'zh-Hant', 'en']);
 // => ['zh-Hans', 'zh-Hant']
 
-// 自动推断脚本 Auto Detect Script
+// Auto Detect Script
 match('zh-TW', ['zh-Hans', 'zh-Hant', 'zh']);
 // => ['zh-Hant', 'zh', 'zh-Hans']
 
-// 多语言场景 Multi-language
+// Multi-language
 match('fr', ['fr-CA', 'fr-FR', 'es']);
 // => ['fr-FR', 'fr-CA']
 
@@ -89,17 +81,17 @@ rank('zh-TW', ['zh-Hans', 'zh-Hant', 'zh']);
 */
 ```
 
-## 匹配规则 Match Rules
+## Match Rules
 
-1. **语言匹配**：首先过滤出相同语言的候选
-2. **脚本匹配**（优先级最高）：
-   - 完全匹配 +1000 分
-   - 无脚本 +500 分
-3. **地区匹配**：
-   - 完全匹配 +500 分
-   - 关联地区匹配 +300 分
-4. **排序规则**：
-   - 按总分降序
-   - 按内置脚本优先级（如 `Hans` > `Hant`）
-   - 按内置地区优先级（如 `CN` > `TW` > `HK`）
-   - 按字母顺序
+1. **Language Matching**: First filter candidates with the same language
+2. **Script Matching** (highest priority):
+   - Exact match: +1000 points
+   - No script: +500 points
+3. **Region Matching**:
+   - Exact match: +500 points
+   - Affinitive region match: +300 points
+4. **Sorting Rules**:
+   - Descending by total score
+   - By built-in script priority (e.g., `Hans` > `Hant`)
+   - By built-in region priority (e.g., `CN` > `TW` > `HK`)
+   - Alphabetical order
