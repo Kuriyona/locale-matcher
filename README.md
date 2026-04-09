@@ -49,6 +49,10 @@ match('zh-TW', ['zh-Hans', 'zh-Hant', 'zh']);
 match('fr', ['fr-CA', 'fr-FR', 'es']);
 // => ['fr-FR', 'fr-CA']
 
+// Fallback
+match('fr', ['fr-CA', 'fr-FR', 'es'], true);
+// => ['fr-FR', 'fr-CA', 'es']
+
 rank('zh-TW', ['zh-Hans', 'zh-Hant', 'zh']);
 /*
 [

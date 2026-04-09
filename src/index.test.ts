@@ -129,6 +129,27 @@ describe('Matcher Tests', () => {
     });
   });
 
+  describe('Fallback', () => {
+    const fallbackTestCases = [
+      {
+        target: 'ja-JP',
+        candidates: ['ja', 'ja-JP-mac', 'en-US'],
+        expected: ['ja-JP-mac', 'ja', 'en-US']
+      },
+      {
+        target: 'fr',
+        candidates: ['fr-CA', 'fr-FR', 'es'],
+        expected: ['fr-FR', 'fr-CA', 'es']
+      }
+    ];
+
+    fallbackTestCases.forEach(({ target, candidates, expected }) => {
+      it(`${target} & ${JSON.stringify(candidates)}`, () => {
+        expect(match(target, candidates, true)).toEqual(expected);
+      });
+    });
+  });
+
   describe('Edge Cases', () => {
     const edgeCases = [
       {
