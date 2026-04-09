@@ -93,7 +93,8 @@ function calculateMatchScore(
 
 export function rank(
   targetTag: string,
-  candidateTags: string[]
+  candidateTags: string[],
+  fallback: boolean = false
 ): MatchDetail[] {
   if (!targetTag || !candidateTags.length) return [];
 
@@ -108,10 +109,13 @@ export function rank(
 
   const results = candidateTags
     .map(parseLocale)
-    .filter((c) => c.language === target.language)
+    .filter((c) => fallback || c.language === target.language)
     .map((c) => calculateMatchScore(target, c));
 
   return results.sort((a, b) => {
+    if (a.language !== target.language) return 1;
+    if (b.language !== target.language) return -1;
+
     if (a.fullTag === target.fullTag) return -1;
     if (b.fullTag === target.fullTag) return 1;
 
@@ -140,6 +144,10 @@ export function rank(
   });
 }
 
-export function match(targetTag: string, candidateTags: string[]): string[] {
-  return rank(targetTag, candidateTags).map((r) => r.fullTag);
+export function match(
+  targetTag: string,
+  candidateTags: string[],
+  fallback: boolean = false
+): string[] {
+  return rank(targetTag, candidateTags, fallback).map((r) => r.fullTag);
 }
